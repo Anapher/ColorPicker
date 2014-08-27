@@ -1,0 +1,6 @@
+﻿<Window x:Class="ColorPicker.Views.PickColorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PickColorWindow" WindowState="Maximized" ShowInTaskbar="False" Topmost="True" WindowStyle="None" ResizeMode="NoResize" Cursor="Cross">
+    <Image x:Name="img" MouseDown="img_MouseDown"/>
+</Window>

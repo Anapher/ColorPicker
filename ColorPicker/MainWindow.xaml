@@ -1,0 +1,192 @@
+﻿<Window x:Class="ColorPicker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converter="clr-namespace:ColorPicker.Converter"
+        Title="Color Picker" Height="450" Width="800" xmlns:mycontrols="clr-namespace:ColorPicker.Controls" xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:vm="clr-namespace:ColorPicker.ViewModels"
+        DataContext="{x:Static vm:MainViewModel.Instance}" WindowState="{Binding WindowState}">
+    <Window.Resources>
+        <converter:ColorToBrushConverter x:Key="colortobrush"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TabControl>
+            <TabItem Header="Farbtabellenwerte">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Margin="0,10,10,10">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="CIE1931:"/>
+                            <mycontrols:ColorDisplayer ColorType="CIE1931" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="CMY:"/>
+                            <mycontrols:ColorDisplayer ColorType="CMY" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="CMYK:"/>
+                            <mycontrols:ColorDisplayer ColorType="CMYK" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="YCbCr:"/>
+                            <mycontrols:ColorDisplayer ColorType="YCbCr" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="YDbCr:"/>
+                            <mycontrols:ColorDisplayer ColorType="YDbDr" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="YIQ:"/>
+                            <mycontrols:ColorDisplayer ColorType="YIQ" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="YPbPr:"/>
+                            <mycontrols:ColorDisplayer ColorType="YPbPr" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="YUV:"/>
+                            <mycontrols:ColorDisplayer ColorType="YUV" SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                        </Grid>
+                    </StackPanel>
+                    <toolkit:ColorCanvas SelectedColor="{Binding SelectedColor}" Grid.Column="1"/>
+                </Grid>
+                
+            </TabItem>
+            <TabItem Header="Imagepicker">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Menu>
+                        <MenuItem Header="Datei öffnen" Command="{Binding OpenFileCommand}"/>
+                        <MenuItem Header="Von Screenshot" Command="{Binding FromScreenshot}"/>
+                    </Menu>
+                    <mycontrols:ImageColorPicker Source="{Binding SelectedImage}" ColorChanged="ImageColorPicker_ColorChanged" Grid.Row="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Farbressourcen">
+                <TabControl TabStripPlacement="Left">
+                    <TabItem Header="Systemressourcen">
+                        <ScrollViewer Margin="10">
+                            <ItemsControl ItemsSource="{Binding SystemColors}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="3" Command="{Binding SetColor}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="50"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Border BorderThickness="1" BorderBrush="LightGray">
+                                                            <Rectangle Fill="{Binding BaseBrush}"/>
+                                                        </Border>
+                                                        <TextBlock Text="{Binding Name}" Grid.Column="1" Margin="10,0,0,0"/>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Flat UI">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="5">Von <Hyperlink NavigateUri="http://flatuicolors.com/" RequestNavigate="Hyperlink_RequestNavigate">flatuicolors.com</Hyperlink></TextBlock>
+
+                            <!-- First row -->
+                            <mycontrols:TileButton BaseColor="#1abc9c" ColorToSet="{Binding SelectedColor}"/>
+                            <mycontrols:TileButton BaseColor="#2ecc71" ColorToSet="{Binding SelectedColor}" Grid.Column="1"/>
+                            <mycontrols:TileButton BaseColor="#3498db" ColorToSet="{Binding SelectedColor}" Grid.Column="2"/>
+                            <mycontrols:TileButton BaseColor="#9b59b6" ColorToSet="{Binding SelectedColor}" Grid.Column="3"/>
+                            <mycontrols:TileButton BaseColor="#34495e" ColorToSet="{Binding SelectedColor}" Grid.Column="4"/>
+
+                            <!-- Secound row -->
+                            <mycontrols:TileButton BaseColor="#16a085" ColorToSet="{Binding SelectedColor}" Grid.Row="1"/>
+                            <mycontrols:TileButton BaseColor="#27ae60" ColorToSet="{Binding SelectedColor}" Grid.Column="1" Grid.Row="1"/>
+                            <mycontrols:TileButton BaseColor="#2980b9" ColorToSet="{Binding SelectedColor}" Grid.Column="2" Grid.Row="1"/>
+                            <mycontrols:TileButton BaseColor="#8e44ad" ColorToSet="{Binding SelectedColor}" Grid.Column="3" Grid.Row="1"/>
+                            <mycontrols:TileButton BaseColor="#2c3e50" ColorToSet="{Binding SelectedColor}" Grid.Column="4" Grid.Row="1"/>
+
+                            <!-- Third row -->
+                            <mycontrols:TileButton BaseColor="#f1c40f" ColorToSet="{Binding SelectedColor}" Grid.Row="2"/>
+                            <mycontrols:TileButton BaseColor="#e67e22" ColorToSet="{Binding SelectedColor}" Grid.Column="1" Grid.Row="2"/>
+                            <mycontrols:TileButton BaseColor="#e74c3c" ColorToSet="{Binding SelectedColor}" Grid.Column="2" Grid.Row="2"/>
+                            <mycontrols:TileButton BaseColor="#ecf0f1" ColorToSet="{Binding SelectedColor}" Grid.Column="3" Grid.Row="2"/>
+                            <mycontrols:TileButton BaseColor="#95a5a6" ColorToSet="{Binding SelectedColor}" Grid.Column="4" Grid.Row="2"/>
+
+                            <!-- Fourth row -->
+                            <mycontrols:TileButton BaseColor="#f39c12" ColorToSet="{Binding SelectedColor}" Grid.Row="3"/>
+                            <mycontrols:TileButton BaseColor="#d35400" ColorToSet="{Binding SelectedColor}" Grid.Column="1" Grid.Row="3"/>
+                            <mycontrols:TileButton BaseColor="#c0392b" ColorToSet="{Binding SelectedColor}" Grid.Column="2" Grid.Row="3"/>
+                            <mycontrols:TileButton BaseColor="#bdc3c7" ColorToSet="{Binding SelectedColor}" Grid.Column="3" Grid.Row="3"/>
+                            <mycontrols:TileButton BaseColor="#7f8c8d" ColorToSet="{Binding SelectedColor}" Grid.Column="4" Grid.Row="3"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="1">
+            <Rectangle Fill="{Binding SelectedColor,Converter={StaticResource colortobrush}}" Height="25"/>
+        </StackPanel>
+    </Grid>
+</Window>
