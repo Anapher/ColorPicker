@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converter="clr-namespace:ColorPicker.Converter"
         Title="Color Picker" Height="450" Width="800" xmlns:mycontrols="clr-namespace:ColorPicker.Controls" xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:vm="clr-namespace:ColorPicker.ViewModels"
-        DataContext="{x:Static vm:MainViewModel.Instance}" WindowState="{Binding WindowState}">
+        DataContext="{x:Static vm:MainViewModel.Instance}" WindowState="{Binding WindowState}" Icon="Resources/Icon.ico" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <converter:ColorToBrushConverter x:Key="colortobrush"/>
     </Window.Resources>
@@ -183,6 +183,17 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
+            </TabItem>
+            <TabItem Header="Über">
+                <StackPanel Orientation="Vertical" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Programmiert von Vincent (Alkalinee)."/>
+                    <TextBlock>
+                        Source: <Hyperlink NavigateUri="https://github.com/Alkalinee/ColorPicker" RequestNavigate="Hyperlink_RequestNavigate">GitHub</Hyperlink>
+                    </TextBlock>
+                    <TextBlock>
+                        Icon von <Hyperlink NavigateUri="http://icons8.com/" RequestNavigate="Hyperlink_RequestNavigate">icons8.com</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="1">
